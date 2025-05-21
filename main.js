@@ -120,8 +120,8 @@
         createImageBackContent(item) : 
         createWordBackContent(item);
     
-    card.innerHTML = `
-<div class="card-inner relative w-[180px] h-[260px] sm:w-[200px] sm:h-[290px]">
+card.innerHTML = `
+<div class="card-inner relative w-full h-auto aspect-[395/570] max-w-[90%] sm:max-w-[95%] mx-auto">
     <div class="card-face card-front w-full h-full">
         <div class="absolute inset-0 flex flex-col items-center justify-center">
             <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
@@ -137,6 +137,7 @@
     </div>
 </div>
 `;
+
     
     card.addEventListener('click', () => handleCardClick(card));
     return card;
