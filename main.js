@@ -1,10 +1,10 @@
         // Game data
         const gameData = [
-            { id: 1, image:'/img/yasai.png', word:'やさい' },
-            { id: 2, image:'/img/tamago.png', word:'たまご' },
-            { id: 3, image:'/img/sakana.png', word:'さかな' },
-            { id: 4, image:'/img/niku.png', word:'にく' },
-            { id: 5, image:'/img/gohan.png', word:'ごはん' }
+            { id: 1, image:'/img/yasai.png', word:'/img/kata-yasai.png'  },
+            { id: 2, image:'/img/tamago.png', word:'/img/kata-tamago.png'},
+            { id: 3, image:'/img/sakana.png', word:'/img/kata-sakana.png'},
+            { id: 4, image:'/img/niku.png', word:'/img/kata-niku.png' },
+            { id: 5, image:'/img/gohan.png', word:'/img/kata-gohan.png' }
         ];
 
         // Game state
@@ -106,59 +106,57 @@
             allCards.forEach(card => gameBoardContainer.appendChild(card));
         }
 
-        function createCard(item, type) {
-            const card = document.createElement('div');
-            card.className = 'card cursor-pointer transform hover:scale-105 transition-all duration-300';
-            card.dataset.id = item.id;
-            card.dataset.type = type;
-            
-            const iconClass = type === 'image' ? 
-                `<i class="fas fa-image text-white text-2xl"></i>` : 
-                `<i class="fas fa-language text-white text-2xl"></i>`;
-            
-            const backContent = type === 'image' ? 
-                createImageBackContent(item) : 
-                createWordBackContent(item);
-            
-            card.innerHTML = `
-                <div class="card-inner relative h-48 sm:h-56">
-                    <div class="card-face card-front w-full h-full">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-                                ${iconClass}
-                            </div>
-                            <div class="absolute bottom-2 right-2 text-xs text-white font-medium">
-                                ${type === 'image' ? '画像' : '言葉'}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-face card-back w-full h-full">
-                        ${backContent}
-                    </div>
-                   
-                </div>
-            `;
-            
-            card.addEventListener('click', () => handleCardClick(card));
-            return card;
-        }
+       function createCard(item, type) {
+    const card = document.createElement('div');
+    card.className = 'card cursor-pointer transform hover:scale-105 transition-all duration-300';
+    card.dataset.id = item.id;
+    card.dataset.type = type;
+    
+    const iconClass = type === 'image' ? 
+        `<i class="fas fa-image text-white text-2xl"></i>` : 
+        `<i class="fas fa-image text-white text-2xl"></i>`; // Diubah dari fas fa-language menjadi fas fa-image
+    
+    const backContent = type === 'image' ? 
+        createImageBackContent(item) : 
+        createWordBackContent(item);
+    
+    card.innerHTML = `
+<div class="card-inner relative w-[180px] h-[260px] sm:w-[200px] sm:h-[290px]">
+    <div class="card-face card-front w-full h-full">
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                ${iconClass}
+            </div>
+            <div class="absolute bottom-2 right-2 text-xs text-white font-medium">
+                ${type === 'image' ? '画像' : '言葉'}
+            </div>
+        </div>
+    </div>
+    <div class="card-face card-back w-full h-full">
+        ${backContent}
+    </div>
+</div>
+`;
+    
+    card.addEventListener('click', () => handleCardClick(card));
+    return card;
+}
 
         function createImageBackContent(item) {
             return `
                 <div class="flex flex-col items-center justify-center h-full p-3">
-                    <img src="${item.image}" alt="${item.word}" class="card-image">
+                    <img src="${item.image}" alt="${item.word}" class="card-image rounded-lg">
                 </div>
             `;
         }
 
-        function createWordBackContent(item) {
-            return `
-                <div class="flex flex-col items-center justify-center h-full p-3">
-                    <div class="text-3xl font-bold text-indigo-800 mb-1 japanese">${item.word}</div>
-                </div>
-            `;
-        }
-
+       function createWordBackContent(item) {
+    return `
+        <div class="flex flex-col items-center justify-center h-full p-3">
+            <img src="${item.word}" alt="Word Image" class="card-image rounded-lg">
+        </div>
+    `;
+}
         // Handle card click
         function handleCardClick(card) {
             if (!canSelect || card.classList.contains('matched') || card.classList.contains('flipped')) {
